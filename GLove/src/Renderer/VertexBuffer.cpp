@@ -1,6 +1,5 @@
+#include "pch.h"
 #include "VertexBuffer.h"
-
-#include <glad/glad.h>
 
 VertexBuffer::VertexBuffer(float* verts, unsigned int size)
 {

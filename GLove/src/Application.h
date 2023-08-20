@@ -1,9 +1,11 @@
 #pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "Renderer/VertexArray.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.h"
 
-#include "Log.h"
+#include "Renderer/Primitives.h"
+#include "Renderer/Shader.h"
 
 class Application
 {
@@ -13,5 +15,11 @@ public:
 
 	void Run();
 private:
-	GLFWwindow* m_Window;
+	GLFWwindow* m_Window = nullptr;
+
+	std::unique_ptr<VertexArray> m_VAO;
+	std::unique_ptr<IndexBuffer> m_IBO;
+	std::unique_ptr<Shader> m_Shader;
+	
+	Square m_Square;
 };

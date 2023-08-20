@@ -1,6 +1,5 @@
+#include "pch.h"
 #include "IndexBuffer.h"
-
-#include <glad/glad.h>
 
 IndexBuffer::IndexBuffer(unsigned int* indices, unsigned int count)
 	: m_Count(count)

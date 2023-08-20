@@ -1,6 +1,10 @@
+#include "pch.h"
 #include "Application.h"
 
+#include <glm/gtc/type_ptr.hpp>
+
 Application::Application()
+    : m_Square(10)
 {
     /* Initialize the library */
     if (!glfwInit())
@@ -26,6 +30,23 @@ Application::Application()
         LOG_ERROR("Failed to Initalize GLAD!");
         return;
     }
+
+    m_VAO.reset(new VertexArray);
+
+    float* vertices = m_Square.GetVertices();
+    unsigned int* indices = m_Square.GetIndices();
+
+    VertexBuffer vbo(vertices, sizeof(vertices));
+
+    VertexBufferLayout layout;
+    layout.Push("v_Pos", 2);
+
+    m_VAO->AddBuffer(vbo, layout);
+
+    m_IBO.reset(new IndexBuffer(indices, sizeof(indices) / sizeof(unsigned int)));
+
+    m_Shader.reset(new Shader("res/shaders/Basic.vert", "res/shaders/Basic.frag"));
+    m_Shader->Bind();
 }
 
 Application::~Application()
@@ -42,6 +63,11 @@ void Application::Run()
         /* Render here */
         glClear(GL_DEPTH_BUFFER_BIT);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        m_VAO->Bind();
+        m_Shader->Bind();
+
+        glDrawElements(GL_TRIANGLES, m_IBO->GetCount(), GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(m_Window);
