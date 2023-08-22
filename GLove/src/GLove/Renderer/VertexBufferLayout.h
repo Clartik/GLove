@@ -4,6 +4,7 @@
 
 struct VertexBufferElement
 {
+	std::string DebugName;
 	unsigned int Type;
 	unsigned int Count;
 	bool Normalized;
@@ -33,7 +34,7 @@ public:
 
 	void Push(const std::string& debugName, unsigned int count)
 	{
-		VertexBufferElement element = { GL_FLOAT, count, GL_FALSE };
+		VertexBufferElement element = { debugName, GL_FLOAT, count, GL_FALSE };
 		m_Elements.emplace_back(element);
 		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
 	}

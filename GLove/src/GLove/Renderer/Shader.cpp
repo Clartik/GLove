@@ -1,40 +1,30 @@
 #include "pch.h"
 #include "Shader.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <fstream>
 #include <sstream>
 
 Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
 {
-    unsigned int vertexShader = CompileShader(GL_VERTEX_SHADER, vertexPath);
+    std::string vertexSrc = ParseShader(vertexPath);
+    unsigned int vertexShader = CompileShader(GL_VERTEX_SHADER, vertexSrc);
     if (!IsCompiled(vertexShader, "Vertex Shader Compilation Failed!")) return;
 
-    unsigned int fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentPath);
+    std::string fragmnetSrc = ParseShader(fragmentPath);
+    unsigned int fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmnetSrc);
     if (!IsCompiled(fragmentShader, "Fragmnet Shader Compilation Failed!")) return;
 
     m_RendererID = CreateShader(vertexShader, fragmentShader);
 
-    GLint isLinked = 0;
-    glGetProgramiv(m_RendererID, GL_LINK_STATUS, &isLinked);
-
-    if (isLinked == GL_FALSE)
+    if (!IsLinked())
     {
-        GLint maxLength = 0;
-        glGetProgramiv(m_RendererID, GL_INFO_LOG_LENGTH, &maxLength);
-
-        // The maxLength includes the NULL character
-        std::vector<GLchar> infoLog(maxLength);
-        glGetProgramInfoLog(m_RendererID, maxLength, &maxLength, &infoLog[0]);
-
-        // We don't need the program anymore.
-        glDeleteProgram(m_RendererID);
-
         // Don't leak shaders either.
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
 
-        LOG_ERROR("{0}", infoLog.data());
-        ASSERT(false, "Shader Link Failure!")
         return;
     }
 
@@ -73,6 +63,18 @@ void Shader::SetUniformMat4f(const std::string& name, const glm::mat4x4& matrix)
     glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
 }
 
+std::string Shader::ParseShader(const std::string& filepath)
+{
+    std::ifstream file(filepath);
+
+    ASSERT(file, "Error Reading Shader Filepath: {0}", filepath);
+
+    std::stringstream ss;
+
+    ss << file.rdbuf();
+    return ss.str();
+}
+
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 {
     unsigned int shader = glCreateShader(type);
@@ -83,7 +85,6 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
     glCompileShader(shader);
 
     return shader;
-
 }
 
 bool Shader::IsCompiled(unsigned int shader, const std::string& errorMsg)
@@ -103,6 +104,32 @@ bool Shader::IsCompiled(unsigned int shader, const std::string& errorMsg)
 
         LOG_ERROR("{0}", infoLog.data());
         ASSERT(false, errorMsg)
+
+        return false;
+    }
+
+    return true;
+}
+
+bool Shader::IsLinked()
+{
+    GLint isLinked = 0;
+    glGetProgramiv(m_RendererID, GL_LINK_STATUS, &isLinked);
+
+    if (isLinked == GL_FALSE)
+    {
+        GLint maxLength = 0;
+        glGetProgramiv(m_RendererID, GL_INFO_LOG_LENGTH, &maxLength);
+
+        // The maxLength includes the NULL character
+        std::vector<GLchar> infoLog(maxLength);
+        glGetProgramInfoLog(m_RendererID, maxLength, &maxLength, &infoLog[0]);
+
+        // We don't need the program anymore.
+        glDeleteProgram(m_RendererID);
+
+        LOG_ERROR("{0}", infoLog.data());
+        ASSERT(false, "Shader Link Failure!")
 
         return false;
     }

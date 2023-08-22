@@ -7,6 +7,8 @@
 #include "Renderer/Primitives.h"
 #include "Renderer/Shader.h"
 
+struct GLFWwindow;
+
 class Application
 {
 public:
@@ -15,11 +17,19 @@ public:
 
 	void Run();
 private:
+	void OpenGLInit();
+private:
+	bool m_Running = true;
+
 	GLFWwindow* m_Window = nullptr;
 
 	std::unique_ptr<VertexArray> m_VAO;
+	std::unique_ptr<VertexBuffer> m_VBO;
 	std::unique_ptr<IndexBuffer> m_IBO;
 	std::unique_ptr<Shader> m_Shader;
+
+	glm::mat4 m_View, m_Proj;
+	glm::vec3 m_Translation;
 	
-	Square m_Square;
+	Quad m_Quad;
 };

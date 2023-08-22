@@ -19,8 +19,11 @@ public:
 	void SetUniform4f(const std::string& name, const glm::vec4& vec);
 	void SetUniformMat4f(const std::string& name, const glm::mat4x4& matrix);
 private:
+	std::string ParseShader(const std::string& filepath);
 	unsigned int CompileShader(unsigned int type, const std::string& source);
+
 	bool IsCompiled(unsigned int shader, const std::string& errorMsg);
+	bool IsLinked();
 
 	unsigned int CreateShader(unsigned int vertexShader, unsigned int fragmentShader);
 

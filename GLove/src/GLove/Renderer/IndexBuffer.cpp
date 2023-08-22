@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "IndexBuffer.h"
 
-IndexBuffer::IndexBuffer(unsigned int* indices, unsigned int count)
+#include <glad/glad.h>
+
+IndexBuffer::IndexBuffer(const unsigned int* indices, unsigned int count)
 	: m_Count(count)
 {
 	glGenBuffers(1, &m_RendererID);

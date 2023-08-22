@@ -3,7 +3,7 @@
 class IndexBuffer
 {
 public:
-	IndexBuffer(unsigned int* indices, unsigned int count);
+	IndexBuffer(const unsigned int* indices, unsigned int count);
 	~IndexBuffer();
 
 	inline unsigned int GetCount() const { return m_Count; }
