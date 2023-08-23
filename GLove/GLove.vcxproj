@@ -165,7 +165,11 @@
   <ItemGroup>
     <ClCompile Include="src\GLove\Core\Application.cpp" />
     <ClCompile Include="src\GLove\Core\Log.cpp" />
-    <ClCompile Include="src\GLove\Entity\Transform.cpp" />
+    <ClCompile Include="src\GLove\GameObject\Camera\Camera.cpp" />
+    <ClCompile Include="src\GLove\GameObject\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\GLove\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\GLove\GameObject\Mesh.cpp" />
+    <ClCompile Include="src\GLove\GameObject\Transform.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\GLove\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -188,9 +192,13 @@
     <ClInclude Include="src\GLove\Core\Application.h" />
     <ClInclude Include="src\GLove\Core\Core.h" />
     <ClInclude Include="src\GLove\Core\Log.h" />
-    <ClInclude Include="src\GLove\Entity\Transform.h" />
+    <ClInclude Include="src\GLove\GameObject\Camera\Camera.h" />
+    <ClInclude Include="src\GLove\GameObject\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\GLove\GameObject\Component.h" />
+    <ClInclude Include="src\GLove\GameObject\Mesh.h" />
+    <ClInclude Include="src\GLove\GameObject\Transform.h" />
     <ClInclude Include="src\GLove\pch.h" />
-    <ClInclude Include="src\GLove\Entity\Entity.h" />
+    <ClInclude Include="src\GLove\GameObject\GameObject.h" />
     <ClInclude Include="src\GLove\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\GLove\Renderer\Primitives.h" />
     <ClInclude Include="src\GLove\Renderer\Shader.h" />

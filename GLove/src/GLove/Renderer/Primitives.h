@@ -31,9 +31,26 @@ private:
 class Cube
 {
 public:
-	Cube(const glm::vec3& pos, float size, const glm::vec4& color)
-		: m_Indices{ 
-			0, 1, 2, 
+	Cube(const glm::vec4& color)
+		: m_Vertices(8), m_Indices(36)
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			m_Vertices[i].Color = color;
+		}
+
+		m_Vertices[0].Position = {  1.0f, -1.0f,  1.0f };
+		m_Vertices[1].Position = { -1.0f, -1.0f,  1.0f };
+		m_Vertices[2].Position = { -1.0f,  1.0f,  1.0f };
+		m_Vertices[3].Position = {  1.0f,  1.0f,  1.0f };
+
+		m_Vertices[4].Position = {  1.0f, -1.0f, -1.0f };
+		m_Vertices[5].Position = { -1.0f, -1.0f, -1.0f };
+		m_Vertices[6].Position = { -1.0f,  1.0f, -1.0f };
+		m_Vertices[7].Position = {  1.0f,  1.0f, -1.0f };
+
+		m_Indices = {
+			0, 1, 2,
 			2, 3, 0,
 
 			4, 0, 3,
@@ -50,30 +67,12 @@ public:
 
 			4, 5, 1,
 			1, 0, 4
-		}
-	{
-		for (int i = 0; i < 8; i++)
-		{
-			m_Vertices[i].Color = color;
-		}
-
-		m_Vertices[0].Position = { pos.x + size, pos.y - size, pos.z + size };
-		m_Vertices[1].Position = { pos.x - size, pos.y - size, pos.z + size };
-		m_Vertices[2].Position = { pos.x - size, pos.y + size, pos.z + size };
-		m_Vertices[3].Position = { pos.x + size, pos.y + size, pos.z + size };
-
-		m_Vertices[4].Position = { pos.x + size, pos.y - size, pos.z - size };
-		m_Vertices[5].Position = { pos.x - size, pos.y - size, pos.z - size };
-		m_Vertices[6].Position = { pos.x - size, pos.y + size, pos.z - size };
-		m_Vertices[7].Position = { pos.x + size, pos.y + size, pos.z - size };
+		};
 	}
 
-	inline const Vertex* GetVertices() const { return m_Vertices; }
-	inline const unsigned int GetVerticesSize() const { return sizeof(m_Vertices) / sizeof(Vertex); }
-
-	inline const unsigned int* GetIndices() const { return m_Indices; }
-	inline const unsigned int GetIndicesSize() const { return sizeof(m_Indices) / sizeof(unsigned int); }
+	inline const std::vector<Vertex>& GetVertices() const { return m_Vertices; }
+	inline const std::vector<unsigned int>& GetIndices() const { return m_Indices; }
 private:
-	Vertex m_Vertices[8];
-	unsigned int m_Indices[36];
+	std::vector<Vertex> m_Vertices;
+	std::vector<unsigned int> m_Indices;
 };

@@ -6,37 +6,28 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
+#include "GameObject/Mesh.h"
+
 void GLFWErrorCallback(int error, const char* description)
 {
     LOG_ERROR("GLFW Error ({0}): {1}", error, description);
 }
 
 Application::Application()
-    : m_Quad({0.0f, 0.0f, 0.0f}, 1.0f), m_View(glm::translate(glm::mat4(1.0f), glm::vec3(5.0f, 0.0f, -10.0f))),
-    m_Translation(0.0f, 0.0f, 0.0f), m_Proj(glm::perspective(45.0f, 640.0f / 480.0f, 0.1f, 1000.0f))
 {
     Log::Init();
     OpenGLInit();
 
-    Cube cube({ 0.0f, 0.0f, 0.0f }, 1.0f, {0.0f, 1.0f, 0.0f, 1.0f});
+    m_Cube = new GameObject();
+    m_Cube->AddComponent(new Mesh(*m_Cube->GetTransform()));
 
-    m_VAO.reset(new VertexArray());
+    m_Camera = new PerspectiveCamera(45.0f, 640.0f / 480.0f, 0.1f, 1000.0f);
+    m_Camera->SetPosition({ 5.0f, 3.0f, -5.0f });
 
-    const Vertex* vertices = cube.GetVertices();
-    const unsigned int* indices = cube.GetIndices();
+    Cube cube({0.0f, 1.0f, 0.0f, 1.0f});
 
-    m_VBO.reset(new VertexBuffer(vertices, cube.GetVerticesSize() * sizeof(Vertex)));
-
-    VertexBufferLayout layout;
-    layout.Push("pos", 3);
-    layout.Push("color", 4);
-
-    m_VAO->AddBuffer(*m_VBO, layout);
-
-    m_IBO.reset(new IndexBuffer(indices, cube.GetIndicesSize()));
-
-    m_Shader.reset(new Shader("res/shaders/Basic.vert", "res/shaders/Basic.frag"));
-    m_Shader->Bind();
+    m_Cube->GetComponent<Mesh>()->Load(cube.GetVertices(), cube.GetIndices());
+    m_Camera->SetLookAt(m_Cube->GetTransform()->GetPosition());
 }
 
 Application::~Application()
@@ -51,15 +42,9 @@ void Application::Run()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        m_VAO->Bind();
+        m_Cube->OnUpdate();
 
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), m_Translation);
-        glm::mat4 mvp = m_Proj * m_View * model;
-
-        m_Shader->Bind();
-        m_Shader->SetUniformMat4f("u_MVP", mvp);
-
-        glDrawElements(GL_TRIANGLES, m_IBO->GetCount(), GL_UNSIGNED_INT, nullptr);
+        m_Cube->OnRender();
 
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
