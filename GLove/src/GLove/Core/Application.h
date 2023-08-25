@@ -1,24 +1,35 @@
 #pragma once
 
-#include "GameObject/GameObject.h"
-#include "GameObject/Camera/PerspectiveCamera.h"
+#include "Window.h"
+#include "LayerStack.h"
 
-struct GLFWwindow;
+#include "Events/ApplicationEvent.h"
 
 class Application
 {
 public:
-	Application();
+	Application(const WindowProps& props);
 	~Application();
 
 	void Run();
+	
+	inline void PushLayer(Layer* layer) { m_LayerStack.PushLayer(layer); }
+	inline void PopLayer(Layer* layer) { m_LayerStack.PopLayer(layer); }
+
+	inline Window& GetWindow() { return *m_Window; }
+	inline static Application& Get() { return *s_Instance; }
 private:
-	void OpenGLInit();
+	void OnEvent(Event& e);
+	bool OnWindowClose(WindowCloseEvent& e);
 private:
 	bool m_Running = true;
+	float m_LastFrameTime = 0.0f;
 
-	GLFWwindow* m_Window = nullptr;
-
-	GameObject* m_Cube;
-	PerspectiveCamera* m_Camera;
+	Window* m_Window = nullptr;
+	LayerStack m_LayerStack;
+private:
+	static Application* s_Instance;
 };
+
+// To be defined in CLIENT
+Application* CreateApplication();

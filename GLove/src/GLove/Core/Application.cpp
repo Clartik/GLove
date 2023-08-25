@@ -8,32 +8,22 @@
 
 #include "GameObject/Mesh.h"
 
-void GLFWErrorCallback(int error, const char* description)
-{
-    LOG_ERROR("GLFW Error ({0}): {1}", error, description);
-}
+Application* Application::s_Instance = nullptr;
 
-Application::Application()
+Application::Application(const WindowProps& props)
 {
     Log::Init();
-    OpenGLInit();
 
-    m_Cube = new GameObject();
-    m_Cube->AddComponent(new Mesh(*m_Cube->GetTransform()));
+    ASSERT(!s_Instance, "Application is Already Initalized!");
+    s_Instance = this;
 
-    m_Camera = new PerspectiveCamera(45.0f, 640.0f / 480.0f, 0.1f, 1000.0f);
-    m_Camera->SetPosition({ 5.0f, 3.0f, -5.0f });
-
-    Cube cube({0.0f, 1.0f, 0.0f, 1.0f});
-
-    m_Cube->GetComponent<Mesh>()->Load(cube.GetVertices(), cube.GetIndices());
-    m_Camera->SetLookAt(m_Cube->GetTransform()->GetPosition());
+    m_Window = new Window(props);
+    m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 }
 
 Application::~Application()
 {
-    glfwDestroyWindow(m_Window);
-    glfwTerminate();
+    delete m_Window;
 }
 
 void Application::Run()
@@ -42,43 +32,32 @@ void Application::Run()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        m_Cube->OnUpdate();
+        float time = (float)glfwGetTime();
+        float deltaTime = time - m_LastFrameTime;
+        m_LastFrameTime = time;
 
-        m_Cube->OnRender();
+        for (Layer* layer : m_LayerStack)
+            layer->OnUpdate(deltaTime);
 
-        glfwSwapBuffers(m_Window);
-        glfwPollEvents();
+        m_Window->OnUpdate();
     }
 }
 
-void Application::OpenGLInit()
+void Application::OnEvent(Event& e)
 {
-    /* Initialize the library */
-    if (!glfwInit())
+    EventDispatcher disptacher(e);
+    disptacher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+
+    for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
     {
-        LOG_ERROR("Failed to Initalize GLFW!");
-        return;
+        (*--it)->OnEvent(e);
+        if (e.Handled)
+            break;
     }
+}
 
-    glfwSetErrorCallback(GLFWErrorCallback);
-
-    /* Create a windowed mode window and its OpenGL context */
-    m_Window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!m_Window)
-    {
-        LOG_ERROR("Failed to Initalize the Window!");
-        glfwTerminate();
-        return;
-    }
-
-    /* Make the window's context current */
-    glfwMakeContextCurrent(m_Window);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        LOG_ERROR("Failed to Initalize GLAD!");
-        return;
-    }
-
-    LOG_INFO("OpenGL Initialized Sucessfully");
+bool Application::OnWindowClose(WindowCloseEvent& e)
+{
+    m_Running = false;
+    return true;
 }

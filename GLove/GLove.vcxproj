@@ -33,7 +33,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>A</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -71,20 +71,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\($Configuration-$Platform)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\($Configuration-$Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\($Configuration-$Platform)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\($Configuration-$Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\($Configuration-$Platform)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\($Configuration-$Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\($Configuration-$Platform)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\($Configuration-$Platform)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENABLE_ASSERTS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENABLE_ASSERTS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -149,7 +149,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -164,13 +164,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\GLove\Core\Application.cpp" />
+    <ClCompile Include="src\GLove\Core\LayerStack.cpp" />
     <ClCompile Include="src\GLove\Core\Log.cpp" />
+    <ClCompile Include="src\GLove\Core\Window.cpp" />
     <ClCompile Include="src\GLove\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="src\GLove\GameObject\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\GLove\GameObject\GameObject.cpp" />
     <ClCompile Include="src\GLove\GameObject\Mesh.cpp" />
     <ClCompile Include="src\GLove\GameObject\Transform.cpp" />
-    <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\GLove\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -181,6 +182,8 @@
     <ClCompile Include="src\GLove\Renderer\Shader.cpp" />
     <ClCompile Include="src\GLove\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\GLove\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Sandbox\App.cpp" />
+    <ClCompile Include="src\Sandbox\Layers\MainLayer.cpp" />
     <ClCompile Include="vendor\glad\src\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -189,14 +192,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GLove\GLove.h" />
     <ClInclude Include="src\GLove\Core\Application.h" />
     <ClInclude Include="src\GLove\Core\Core.h" />
+    <ClInclude Include="src\GLove\Core\LayerStack.h" />
     <ClInclude Include="src\GLove\Core\Log.h" />
+    <ClInclude Include="src\GLove\Core\Window.h" />
+    <ClInclude Include="src\GLove\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\GLove\Events\Event.h" />
+    <ClInclude Include="src\GLove\Events\KeyEvent.h" />
+    <ClInclude Include="src\GLove\Events\MouseEvent.h" />
     <ClInclude Include="src\GLove\GameObject\Camera\Camera.h" />
     <ClInclude Include="src\GLove\GameObject\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\GLove\GameObject\Component.h" />
     <ClInclude Include="src\GLove\GameObject\Mesh.h" />
     <ClInclude Include="src\GLove\GameObject\Transform.h" />
+    <ClInclude Include="src\GLove\Core\Layer.h" />
     <ClInclude Include="src\GLove\pch.h" />
     <ClInclude Include="src\GLove\GameObject\GameObject.h" />
     <ClInclude Include="src\GLove\Renderer\IndexBuffer.h" />
@@ -205,6 +216,7 @@
     <ClInclude Include="src\GLove\Renderer\VertexArray.h" />
     <ClInclude Include="src\GLove\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\GLove\Renderer\VertexBufferLayout.h" />
+    <ClInclude Include="src\Sandbox\Layers\MainLayer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

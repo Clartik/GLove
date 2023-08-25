@@ -16,7 +16,7 @@ public:
 	void AddComponent(Component* component);
 	void RemoveComponent(Component* component);
 
-	void OnUpdate();
+	void OnUpdate(float deltaTime);
 	void OnRender();
 private:
 	Transform* m_Transform = nullptr;

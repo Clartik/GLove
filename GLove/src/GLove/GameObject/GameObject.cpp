@@ -48,10 +48,10 @@ void GameObject::RemoveComponent(Component* component)
 	m_Components.erase(it);
 }
 
-void GameObject::OnUpdate()
+void GameObject::OnUpdate(float deltaTime)
 {
 	for (auto& component : m_Components)
-		component->OnUpdate();
+		component->OnUpdate(deltaTime);
 }
 
 void GameObject::OnRender()

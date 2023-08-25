@@ -2,8 +2,10 @@
 #include "Transform.h"
 
 Transform::Transform()
-	: m_Position(0.0f), m_Scale(1.0f), m_Rotation(0.0f), m_Model(1.0f)
+	: m_Model(1.0f)
 {
+	SetPosition(glm::vec3(0.0f));
+	SetScale(glm::vec3(1.0f));
 }
 
 Transform::~Transform()
