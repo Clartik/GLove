@@ -18,6 +18,8 @@ public:
 	Window(const WindowProps& props);
 	~Window();
 
+	inline GLFWwindow* GetGLFWWindow() const { return m_Window; }
+
 	unsigned int GetWidth() const { return m_Data.Width; }
 	unsigned int GetHeight() const { return m_Data.Height; }
 

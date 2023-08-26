@@ -2,9 +2,10 @@
 #include "Mesh.h"
 
 #include "Camera/Camera.h"
+#include "GameObject.h"
 
-Mesh::Mesh(const Transform& m_Transform)
-	: m_Transform(m_Transform)
+Mesh::Mesh(GameObject& parent)
+	: Component(parent), m_Transform(*m_Parent.GetTransform())
 {
 	m_VAO.reset(new VertexArray());
 	m_Shader.reset(new Shader("res/shaders/Basic.vert", "res/shaders/Basic.frag"));

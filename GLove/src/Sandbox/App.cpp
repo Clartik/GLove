@@ -11,11 +11,6 @@ public:
 	{
 		PushLayer(new MainLayer());
 	}
-
-	~SandboxApp()
-	{
-
-	}
 };
 
 int main()

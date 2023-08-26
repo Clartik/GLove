@@ -12,13 +12,15 @@
 class Mesh : public Component
 {
 public:
-	Mesh(const Transform& m_Transform);
+	Mesh(GameObject& parent);
 	~Mesh();
 	
 	void Load(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
 	virtual void OnRender() override;
 private:
+	Transform& m_Transform;
+
 	std::unique_ptr<VertexArray> m_VAO;
 	std::unique_ptr<VertexBuffer> m_VBO;
 	std::unique_ptr<IndexBuffer> m_IBO;
@@ -26,6 +28,4 @@ private:
 
 	std::vector<Vertex*> m_Vertices;
 	std::vector<unsigned int> m_Indices;
-
-	const Transform& m_Transform;
 };

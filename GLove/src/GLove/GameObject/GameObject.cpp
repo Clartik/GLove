@@ -3,7 +3,7 @@
 
 GameObject::GameObject()
 {
-	m_Transform = new Transform;
+	m_Transform = new Transform(*this);
 	m_Components.emplace_back(m_Transform);
 }
 

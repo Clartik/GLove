@@ -14,5 +14,5 @@ public:
 	virtual void OnEvent(Event& e) override;
 private:
 	GameObject* m_Cube;
-	PerspectiveCamera* m_Camera;
+	GameObject* m_Camera;
 };

@@ -95,6 +95,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,6 +115,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +135,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +155,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\src\GLove\;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(ProjectDir)vendor\spdlog\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -164,12 +168,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\GLove\Core\Application.cpp" />
+    <ClCompile Include="src\GLove\Core\Input.cpp" />
     <ClCompile Include="src\GLove\Core\LayerStack.cpp" />
     <ClCompile Include="src\GLove\Core\Log.cpp" />
     <ClCompile Include="src\GLove\Core\Window.cpp" />
     <ClCompile Include="src\GLove\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="src\GLove\GameObject\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\GLove\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\GLove\GameObject\Light.cpp" />
     <ClCompile Include="src\GLove\GameObject\Mesh.cpp" />
     <ClCompile Include="src\GLove\GameObject\Transform.cpp" />
     <ClCompile Include="src\GLove\pch.cpp">
@@ -179,6 +185,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\GLove\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\GLove\Renderer\Renderer.cpp" />
     <ClCompile Include="src\GLove\Renderer\Shader.cpp" />
     <ClCompile Include="src\GLove\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\GLove\Renderer\VertexBuffer.cpp" />
@@ -192,6 +199,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GLove\Core\Input.h" />
+    <ClInclude Include="src\GLove\Core\KeyCodes.h" />
+    <ClInclude Include="src\GLove\GameObject\Light.h" />
     <ClInclude Include="src\GLove\GLove.h" />
     <ClInclude Include="src\GLove\Core\Application.h" />
     <ClInclude Include="src\GLove\Core\Core.h" />
@@ -212,6 +222,7 @@
     <ClInclude Include="src\GLove\GameObject\GameObject.h" />
     <ClInclude Include="src\GLove\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\GLove\Renderer\Primitives.h" />
+    <ClInclude Include="src\GLove\Renderer\Renderer.h" />
     <ClInclude Include="src\GLove\Renderer\Shader.h" />
     <ClInclude Include="src\GLove\Renderer\VertexArray.h" />
     <ClInclude Include="src\GLove\Renderer\VertexBuffer.h" />
